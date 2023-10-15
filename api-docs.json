@@ -1,0 +1,236 @@
+{
+	"info": {
+		"_postman_id": "d2b4bb6f-225e-484c-9138-d760a5deb70e",
+		"name": "Go Gin",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Fetch Albums",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/albums",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"albums"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Fetch Albums",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/albums",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"albums"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 16 Nov 2022 08:17:26 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "382"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": \"1\",\n        \"title\": \"Blue Train\",\n        \"artist\": \"John Coltrane\",\n        \"price\": 56.99\n    },\n    {\n        \"id\": \"2\",\n        \"title\": \"Jeru\",\n        \"artist\": \"Gerry Mulligan\",\n        \"price\": 17.99\n    },\n    {\n        \"id\": \"3\",\n        \"title\": \"Sarah Vaughan and Clifford Brown\",\n        \"artist\": \"Sarah Vaughan\",\n        \"price\": 39.99\n    }\n]"
+				},
+				{
+					"name": "Fetch Specific Album",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/albums/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"albums",
+								"1"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 16 Nov 2022 08:19:46 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "95"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": \"1\",\n    \"title\": \"Blue Train\",\n    \"artist\": \"John Coltrane\",\n    \"price\": 56.99\n}"
+				}
+			]
+		},
+		{
+			"name": "Fetch Albums Copy",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/albums",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"albums"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Fetch Albums",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/albums",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"albums"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 16 Nov 2022 08:17:26 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "382"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": \"1\",\n        \"title\": \"Blue Train\",\n        \"artist\": \"John Coltrane\",\n        \"price\": 56.99\n    },\n    {\n        \"id\": \"2\",\n        \"title\": \"Jeru\",\n        \"artist\": \"Gerry Mulligan\",\n        \"price\": 17.99\n    },\n    {\n        \"id\": \"3\",\n        \"title\": \"Sarah Vaughan and Clifford Brown\",\n        \"artist\": \"Sarah Vaughan\",\n        \"price\": 39.99\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Create Album",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"4\",\n    \"title\": \"The Modern Sound of Betty Carter\",\n    \"artist\": \"Betty Carter\",\n    \"price\": 49.99\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/albums",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"albums"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Create Album",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"4\",\n    \"title\": \"The Modern Sound of Betty Carter\",\n    \"artist\": \"Betty Carter\",\n    \"price\": 49.99\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/albums",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"albums"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 16 Nov 2022 08:18:47 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "116"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": \"4\",\n    \"title\": \"The Modern Sound of Betty Carter\",\n    \"artist\": \"Betty Carter\",\n    \"price\": 49.99\n}"
+				}
+			]
+		}
+	]
+}
