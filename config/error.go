@@ -14,6 +14,9 @@ type APIError struct {
 	Message string `json:"message"`
 }
 
+// MsgForTag returns a custom error message based on the validation tag
+// This function is used to provide a more descriptive error message for each validation tag
+// which can be easily consumed by the client.
 func MsgForTag(fe validator.FieldError) string {
 	switch fe.Tag() {
 	case "required":
@@ -49,6 +52,9 @@ func MsgForTag(fe validator.FieldError) string {
 	}
 }
 
+// ValidationErrors converts a validator.ValidationErrors into a slice of APIError
+// This function is used to extract validation errors from the request and return them as a slice of APIError
+// which can be easily consumed by the client.
 func ValidationErrors(err error, c *gin.Context) []APIError {
 	var ve validator.ValidationErrors
 	var out []APIError

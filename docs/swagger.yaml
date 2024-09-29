@@ -5,21 +5,6 @@ definitions:
       token:
         type: string
     type: object
-  types.CollaboratorResponse:
-    properties:
-      avatar:
-        type: string
-      email:
-        type: string
-      id:
-        type: integer
-      name:
-        type: string
-      status:
-        type: boolean
-      user_id:
-        type: integer
-    type: object
   types.LoginPayload:
     properties:
       email:
@@ -31,29 +16,6 @@ definitions:
     required:
     - email
     - password
-    type: object
-  types.ProcessedSessionResponse:
-    properties:
-      collaborators:
-        items:
-          $ref: '#/definitions/types.CollaboratorResponse'
-        type: array
-      created_by:
-        type: integer
-      datetime:
-        type: string
-      duration:
-        type: integer
-      id:
-        type: integer
-      objective:
-        type: string
-      stage:
-        type: string
-      status:
-        type: boolean
-      title:
-        type: string
     type: object
   types.RegisterPayload:
     properties:
@@ -69,53 +31,6 @@ definitions:
     - email
     - name
     - password
-    type: object
-  types.SessionAttachment:
-    properties:
-      category:
-        type: string
-      created_at:
-        type: string
-      id:
-        type: integer
-      name:
-        type: string
-      session_id:
-        type: integer
-      status:
-        type: boolean
-      updated_at:
-        type: string
-      url:
-        type: string
-    type: object
-  types.SessionAttachmentsPayload:
-    properties:
-      session_id:
-        type: integer
-    required:
-    - session_id
-    type: object
-  types.SessionPayload:
-    properties:
-      collaborators:
-        type: string
-      datetime:
-        type: string
-      duration:
-        type: integer
-      objective:
-        type: string
-      stage:
-        type: string
-      title:
-        type: string
-    required:
-    - datetime
-    - duration
-    - objective
-    - stage
-    - title
     type: object
   types.SocialLoginPayload:
     properties:
@@ -142,34 +57,7 @@ definitions:
       updated_at:
         type: string
     type: object
-  types.Workspace:
-    properties:
-      avatar:
-        type: string
-      created_at:
-        type: string
-      id:
-        type: integer
-      name:
-        type: string
-      role:
-        type: string
-      status:
-        type: boolean
-      updated_at:
-        type: string
-    type: object
-  types.WorkspacePayload:
-    properties:
-      name:
-        type: string
-      role:
-        type: string
-    required:
-    - name
-    - role
-    type: object
-host: api-critify.intelligaia.com
+host: localhost:9000
 info:
   contact:
     email: support@swagger.io
@@ -270,147 +158,6 @@ paths:
               type: string
             type: object
       summary: Social Login
-  /session:
-    get:
-      consumes:
-      - application/json
-      description: Get User Critique Sessions List API
-      operationId: get-user-sessions
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            items:
-              $ref: '#/definitions/types.ProcessedSessionResponse'
-            type: array
-        "400":
-          description: Bad Request
-          schema:
-            additionalProperties:
-              type: string
-            type: object
-      security:
-      - BearerAuth: []
-      summary: Get User Sessions
-    post:
-      consumes:
-      - application/json
-      description: Create Critique Session API
-      operationId: create-session
-      parameters:
-      - description: Session Details
-        in: body
-        name: details
-        required: true
-        schema:
-          $ref: '#/definitions/types.SessionPayload'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/types.ProcessedSessionResponse'
-        "400":
-          description: Bad Request
-          schema:
-            additionalProperties:
-              type: string
-            type: object
-      security:
-      - BearerAuth: []
-      summary: Create Session
-  /session/{sessionId}:
-    get:
-      consumes:
-      - application/json
-      description: Get Critique Session Details API
-      operationId: get-session-details
-      parameters:
-      - description: Session ID
-        in: path
-        name: sessionId
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/types.ProcessedSessionResponse'
-        "400":
-          description: Bad Request
-          schema:
-            additionalProperties:
-              type: string
-            type: object
-      security:
-      - BearerAuth: []
-      summary: Get Session Details
-  /session/{sessionId}/files:
-    get:
-      consumes:
-      - application/json
-      description: Get Critique Session Files List API
-      operationId: get-session-files
-      parameters:
-      - description: Session ID
-        in: path
-        name: sessionId
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            items:
-              $ref: '#/definitions/types.SessionAttachment'
-            type: array
-        "400":
-          description: Bad Request
-          schema:
-            additionalProperties:
-              type: string
-            type: object
-      security:
-      - BearerAuth: []
-      summary: Get Session Files List
-  /session/files:
-    post:
-      consumes:
-      - application/json
-      description: Add Files for Critique Session API
-      operationId: add-session-files
-      parameters:
-      - description: Session Files Details
-        in: body
-        name: details
-        required: true
-        schema:
-          $ref: '#/definitions/types.SessionAttachmentsPayload'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            items:
-              $ref: '#/definitions/types.SessionAttachment'
-            type: array
-        "400":
-          description: Bad Request
-          schema:
-            additionalProperties:
-              type: string
-            type: object
-      security:
-      - BearerAuth: []
-      summary: Add Session Files
   /user:
     get:
       consumes:
@@ -433,35 +180,8 @@ paths:
       security:
       - BearerAuth: []
       summary: Get user
-  /workspace:
-    post:
-      consumes:
-      - application/json
-      description: Create User Workspace
-      operationId: create-workspace
-      parameters:
-      - description: Workspace Details
-        in: body
-        name: details
-        required: true
-        schema:
-          $ref: '#/definitions/types.WorkspacePayload'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/types.Workspace'
-        "400":
-          description: Bad Request
-          schema:
-            additionalProperties:
-              type: string
-            type: object
-      summary: Create Workspace
 schemes:
-- https
+- http
 securityDefinitions:
   BearerAuth:
     description: '"Type ''Bearer'' followed by a space and your JWT token."'

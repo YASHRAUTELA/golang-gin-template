@@ -2,13 +2,10 @@ package models
 
 import (
 	"fmt"
-	"net/http"
 	"os"
 	"server/config"
 	"server/types"
-	"strings"
 
-	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -44,6 +41,14 @@ func VerifyJWTToken(jwtToken string) (*types.User, error) {
 	}
 }
 
+// CreateJWTToken creates a new JWT token for the given user.
+//
+// Parameters:
+//   - user: An User object representing the user for whom the token is being created.
+//
+// Returns:
+//   - string: The JWT token string.
+//   - error: An error object if there is an issue creating the token.
 func CreateJWTToken(user types.User) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"id":       user.ID,
@@ -56,36 +61,47 @@ func CreateJWTToken(user types.User) (string, error) {
 	return tokenString, err
 }
 
+// HashPassword generates a hashed password from the given password string.
+//
+// Parameters:
+//   - password: The string representing the password to be hashed.
+//
+// Returns:
+//   - string: The hashed password string.
+//   - error: An error object if there is an issue hashing the password.
 func HashPassword(password string) (string, error) {
 	bytes, error := bcrypt.GenerateFromPassword([]byte(password), 10)
 	return string(bytes), error
 }
 
+// CheckHashPassword compares the given password string with the provided hash string.
+//
+// Parameters:
+//   - password: The string representing the password to be checked.
+//   - hash: The string representing the hash to be compared against.
+//
+// Returns:
+//   - bool: True if the password matches the hash, false otherwise.
+//   - error: An error object if there is an issue comparing the password and hash.
 func CheckHashPassword(password, hash string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
 	return err == nil
 }
 
+// InsertUser inserts a new user into the database.
+//
+// Parameters:
+//   - user: A pointer to the User object to be inserted.
+//
+// Returns:
+//   - *User: A pointer to the inserted User object.
+//   - error: An error object if there is an issue inserting the user.
 func InsertUser(user *types.User) (*types.User, error) {
 	result := config.DB.Create(user)
 	if result.Error != nil {
 		return nil, result.Error
 	}
 	return user, nil
-}
-
-func InsertUsers(users *[]types.User) (*[]types.User, error) {
-	result := config.DB.Create(users)
-	if result.Error != nil {
-		return nil, result.Error
-	}
-	return users, nil
-}
-
-func FetchUsers(ctx *gin.Context) {
-	var users []types.User
-	config.DB.Find(&users)
-	ctx.JSON(http.StatusOK, users)
 }
 
 // Function to fetch user detail by id
@@ -120,50 +136,4 @@ func FetchUserByEmail(email string) (*types.User, error) {
 		return nil, result.Error
 	}
 	return &user, nil
-}
-
-// Function to fetch users list with emails
-//
-// Parameters:
-//   - email: An email string representing the user's unique email ID.
-//
-// Returns:
-//   - *[]types.User: A pointer to the User object if found.
-//   - error: An error object if there is an issue retrieving the user.
-func FetchUserByEmails(emails []string) (*[]types.User, error) {
-	var users []types.User
-	// Trim spaces in each email
-	for i := range emails {
-		emails[i] = strings.TrimSpace(emails[i])
-	}
-	result := config.DB.Where("email IN ?", emails).Find(&users)
-	if result.Error != nil {
-		return nil, result.Error
-	}
-	return &users, nil
-}
-
-func UpdateUser(ctx *gin.Context) {
-	id := ctx.Param("id")
-	var user types.User
-	if err := config.DB.First(&user, id).Error; err != nil {
-		ctx.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
-		return
-	}
-	if err := ctx.ShouldBindJSON(&user); err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-	config.DB.Save(&user)
-	ctx.JSON(http.StatusOK, user)
-}
-
-func DeleteUser(ctx *gin.Context) {
-	id := ctx.Param("id")
-	var user types.User
-	if err := config.DB.First(&user, id).Error; err != nil {
-		ctx.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
-	}
-	config.DB.Delete(&user)
-	ctx.JSON(http.StatusOK, gin.H{"message": "User deleted"})
 }

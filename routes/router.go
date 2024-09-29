@@ -25,7 +25,5 @@ func InitRoute() *gin.Engine {
 	DefaultRoutes(router)
 	AuthRoutes(router)
 	UserRoutes(router)
-	WorkspaceRoutes(router)
-	SessionRoutes(router)
 	return router
 }

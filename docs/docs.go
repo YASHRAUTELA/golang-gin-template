@@ -156,228 +156,6 @@ const docTemplate = `{
                 }
             }
         },
-        "/session": {
-            "get": {
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ],
-                "description": "Get User Critique Sessions List API",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "summary": "Get User Sessions",
-                "operationId": "get-user-sessions",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/types.ProcessedSessionResponse"
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            },
-            "post": {
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ],
-                "description": "Create Critique Session API",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "summary": "Create Session",
-                "operationId": "create-session",
-                "parameters": [
-                    {
-                        "description": "Session Details",
-                        "name": "details",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/types.SessionPayload"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/types.ProcessedSessionResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/session/files": {
-            "post": {
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ],
-                "description": "Add Files for Critique Session API",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "summary": "Add Session Files",
-                "operationId": "add-session-files",
-                "parameters": [
-                    {
-                        "description": "Session Files Details",
-                        "name": "details",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/types.SessionAttachmentsPayload"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/types.SessionAttachment"
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/session/{sessionId}": {
-            "get": {
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ],
-                "description": "Get Critique Session Details API",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "summary": "Get Session Details",
-                "operationId": "get-session-details",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "Session ID",
-                        "name": "sessionId",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/types.ProcessedSessionResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/session/{sessionId}/files": {
-            "get": {
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ],
-                "description": "Get Critique Session Files List API",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "summary": "Get Session Files List",
-                "operationId": "get-session-files",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "Session ID",
-                        "name": "sessionId",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/types.SessionAttachment"
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/user": {
             "get": {
                 "security": [
@@ -412,47 +190,6 @@ const docTemplate = `{
                     }
                 }
             }
-        },
-        "/workspace": {
-            "post": {
-                "description": "Create User Workspace",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "summary": "Create Workspace",
-                "operationId": "create-workspace",
-                "parameters": [
-                    {
-                        "description": "Workspace Details",
-                        "name": "details",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/types.WorkspacePayload"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/types.Workspace"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            }
         }
     },
     "definitions": {
@@ -461,29 +198,6 @@ const docTemplate = `{
             "properties": {
                 "token": {
                     "type": "string"
-                }
-            }
-        },
-        "types.CollaboratorResponse": {
-            "type": "object",
-            "properties": {
-                "avatar": {
-                    "type": "string"
-                },
-                "email": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "status": {
-                    "type": "boolean"
-                },
-                "user_id": {
-                    "type": "integer"
                 }
             }
         },
@@ -501,41 +215,6 @@ const docTemplate = `{
                     "type": "string",
                     "maxLength": 30,
                     "minLength": 8
-                }
-            }
-        },
-        "types.ProcessedSessionResponse": {
-            "type": "object",
-            "properties": {
-                "collaborators": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/types.CollaboratorResponse"
-                    }
-                },
-                "created_by": {
-                    "type": "integer"
-                },
-                "datetime": {
-                    "type": "string"
-                },
-                "duration": {
-                    "type": "integer"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "objective": {
-                    "type": "string"
-                },
-                "stage": {
-                    "type": "string"
-                },
-                "status": {
-                    "type": "boolean"
-                },
-                "title": {
-                    "type": "string"
                 }
             }
         },
@@ -557,76 +236,6 @@ const docTemplate = `{
                     "type": "string",
                     "maxLength": 30,
                     "minLength": 8
-                }
-            }
-        },
-        "types.SessionAttachment": {
-            "type": "object",
-            "properties": {
-                "category": {
-                    "type": "string"
-                },
-                "created_at": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "session_id": {
-                    "type": "integer"
-                },
-                "status": {
-                    "type": "boolean"
-                },
-                "updated_at": {
-                    "type": "string"
-                },
-                "url": {
-                    "type": "string"
-                }
-            }
-        },
-        "types.SessionAttachmentsPayload": {
-            "type": "object",
-            "required": [
-                "session_id"
-            ],
-            "properties": {
-                "session_id": {
-                    "type": "integer"
-                }
-            }
-        },
-        "types.SessionPayload": {
-            "type": "object",
-            "required": [
-                "datetime",
-                "duration",
-                "objective",
-                "stage",
-                "title"
-            ],
-            "properties": {
-                "collaborators": {
-                    "type": "string"
-                },
-                "datetime": {
-                    "type": "string"
-                },
-                "duration": {
-                    "type": "integer"
-                },
-                "objective": {
-                    "type": "string"
-                },
-                "stage": {
-                    "type": "string"
-                },
-                "title": {
-                    "type": "string"
                 }
             }
         },
@@ -667,47 +276,6 @@ const docTemplate = `{
                     "type": "string"
                 }
             }
-        },
-        "types.Workspace": {
-            "type": "object",
-            "properties": {
-                "avatar": {
-                    "type": "string"
-                },
-                "created_at": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "role": {
-                    "type": "string"
-                },
-                "status": {
-                    "type": "boolean"
-                },
-                "updated_at": {
-                    "type": "string"
-                }
-            }
-        },
-        "types.WorkspacePayload": {
-            "type": "object",
-            "required": [
-                "name",
-                "role"
-            ],
-            "properties": {
-                "name": {
-                    "type": "string"
-                },
-                "role": {
-                    "type": "string"
-                }
-            }
         }
     },
     "securityDefinitions": {
@@ -723,9 +291,9 @@ const docTemplate = `{
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
-	Host:             "api-critify.intelligaia.com",
+	Host:             "localhost:9000",
 	BasePath:         "/",
-	Schemes:          []string{"https"},
+	Schemes:          []string{"http"},
 	Title:            "Gin Postgres Swagger Example API",
 	Description:      "This is a sample server.",
 	InfoInstanceName: "swagger",
