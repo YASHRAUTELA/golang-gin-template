@@ -52,3 +52,4 @@ create a .env file in the project root (if it doesn't already exist) and add the
 - Gorm
 - Bcrypt
 - JWT
+- SwaggerUI
