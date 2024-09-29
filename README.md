@@ -1,25 +1,55 @@
-# RESTful API with Go and Gin
-Supported Version: `go1.19.2` and above
+# Go Server
 
-### Features :
-- Gin Framework
-- Postman API Collection (/api-docs.json)
+Go Version: 1.22.5 or later
 
-### Download and install
-https://go.dev/doc/install
+## Available Scripts
 
-### Tutorial: Get started with Go
-https://go.dev/doc/tutorial/getting-started
+### Initialize Go modules
 
-### Start Server
-```
-go run .
+```bash
+  go mod tidy
 ```
 
-### Editor Configuration : 
-Install Go extension and update Configuration (in VS Code)
+### Run localhost server (using startup script)
+Make the script executable:
+```bash
+  chmod +x start.sh
+```
 
-https://code.visualstudio.com/docs/languages/go
+Running the script:
+```bash
+  ./start.sh
+```
 
-### Other Links
-- [Import Postman Collection](https://learning.postman.com/docs/getting-started/importing-and-exporting-data/#importing-data-into-postman)
+### Run localhost server
+
+In the `server/` directory, you can run:
+
+```bash
+  go run .
+```
+
+### Update swag documentation
+
+```bash
+  swag init
+```
+
+### Set up environment variables:
+
+create a .env file in the project root (if it doesn't already exist) and add the necessary variables.
+
+```bash
+  DB_HOST=localhost
+  DB_USER=yourusername
+  DB_PASSWORD=yourpassword
+  DB_NAME=yourdbname
+  DB_PORT=5432
+```
+
+### Integrations:
+- Postgres
+- Gorm
+- Bcrypt
+- JWT
+- SwaggerUI
