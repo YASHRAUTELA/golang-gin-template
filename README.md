@@ -53,3 +53,4 @@ create a .env file in the project root (if it doesn't already exist) and add the
 - Bcrypt
 - JWT
 - SwaggerUI
+- Social Login with Google
