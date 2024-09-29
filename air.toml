@@ -1,0 +1,8 @@
+# Config file for air
+[build]
+  bin = "./tmp/main"  # output binary location
+  cmd = "go build -o ./tmp/main"  # build command
+  include_ext = ["go", "tpl", "tmpl", "html"]  # watch extensions
+
+[run]
+  cmd = "./tmp/main"  # run command

@@ -1,0 +1,471 @@
+basePath: /
+definitions:
+  types.AuthResponse:
+    properties:
+      token:
+        type: string
+    type: object
+  types.CollaboratorResponse:
+    properties:
+      avatar:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      status:
+        type: boolean
+      user_id:
+        type: integer
+    type: object
+  types.LoginPayload:
+    properties:
+      email:
+        type: string
+      password:
+        maxLength: 30
+        minLength: 8
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  types.ProcessedSessionResponse:
+    properties:
+      collaborators:
+        items:
+          $ref: '#/definitions/types.CollaboratorResponse'
+        type: array
+      created_by:
+        type: integer
+      datetime:
+        type: string
+      duration:
+        type: integer
+      id:
+        type: integer
+      objective:
+        type: string
+      stage:
+        type: string
+      status:
+        type: boolean
+      title:
+        type: string
+    type: object
+  types.RegisterPayload:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      password:
+        maxLength: 30
+        minLength: 8
+        type: string
+    required:
+    - email
+    - name
+    - password
+    type: object
+  types.SessionAttachment:
+    properties:
+      category:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      session_id:
+        type: integer
+      status:
+        type: boolean
+      updated_at:
+        type: string
+      url:
+        type: string
+    type: object
+  types.SessionAttachmentsPayload:
+    properties:
+      session_id:
+        type: integer
+    required:
+    - session_id
+    type: object
+  types.SessionPayload:
+    properties:
+      collaborators:
+        type: string
+      datetime:
+        type: string
+      duration:
+        type: integer
+      objective:
+        type: string
+      stage:
+        type: string
+      title:
+        type: string
+    required:
+    - datetime
+    - duration
+    - objective
+    - stage
+    - title
+    type: object
+  types.SocialLoginPayload:
+    properties:
+      provider:
+        type: string
+      token:
+        type: string
+    required:
+    - provider
+    - token
+    type: object
+  types.UserResponse:
+    properties:
+      avatar:
+        type: string
+      created_at:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  types.Workspace:
+    properties:
+      avatar:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      role:
+        type: string
+      status:
+        type: boolean
+      updated_at:
+        type: string
+    type: object
+  types.WorkspacePayload:
+    properties:
+      name:
+        type: string
+      role:
+        type: string
+    required:
+    - name
+    - role
+    type: object
+host: api-critify.intelligaia.com
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a sample server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Gin Postgres Swagger Example API
+  version: "1.0"
+paths:
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: User login
+      operationId: login
+      parameters:
+      - description: User credentials
+        in: body
+        name: credentials
+        required: true
+        schema:
+          $ref: '#/definitions/types.LoginPayload'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.AuthResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Login
+  /auth/register:
+    post:
+      consumes:
+      - application/json
+      description: User registration
+      operationId: register
+      parameters:
+      - description: User info
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/types.RegisterPayload'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.AuthResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Register
+  /auth/sociallogin:
+    post:
+      consumes:
+      - application/json
+      description: User registration/login with Social providers
+      operationId: sociallogin
+      parameters:
+      - description: User info
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/types.SocialLoginPayload'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.AuthResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Social Login
+  /session:
+    get:
+      consumes:
+      - application/json
+      description: Get User Critique Sessions List API
+      operationId: get-user-sessions
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/types.ProcessedSessionResponse'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Get User Sessions
+    post:
+      consumes:
+      - application/json
+      description: Create Critique Session API
+      operationId: create-session
+      parameters:
+      - description: Session Details
+        in: body
+        name: details
+        required: true
+        schema:
+          $ref: '#/definitions/types.SessionPayload'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.ProcessedSessionResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Create Session
+  /session/{sessionId}:
+    get:
+      consumes:
+      - application/json
+      description: Get Critique Session Details API
+      operationId: get-session-details
+      parameters:
+      - description: Session ID
+        in: path
+        name: sessionId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.ProcessedSessionResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Get Session Details
+  /session/{sessionId}/files:
+    get:
+      consumes:
+      - application/json
+      description: Get Critique Session Files List API
+      operationId: get-session-files
+      parameters:
+      - description: Session ID
+        in: path
+        name: sessionId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/types.SessionAttachment'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Get Session Files List
+  /session/files:
+    post:
+      consumes:
+      - application/json
+      description: Add Files for Critique Session API
+      operationId: add-session-files
+      parameters:
+      - description: Session Files Details
+        in: body
+        name: details
+        required: true
+        schema:
+          $ref: '#/definitions/types.SessionAttachmentsPayload'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/types.SessionAttachment'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Add Session Files
+  /user:
+    get:
+      consumes:
+      - application/json
+      description: Get user by ID
+      operationId: get-user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.UserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Get user
+  /workspace:
+    post:
+      consumes:
+      - application/json
+      description: Create User Workspace
+      operationId: create-workspace
+      parameters:
+      - description: Workspace Details
+        in: body
+        name: details
+        required: true
+        schema:
+          $ref: '#/definitions/types.WorkspacePayload'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Workspace'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Create Workspace
+schemes:
+- https
+securityDefinitions:
+  BearerAuth:
+    description: '"Type ''Bearer'' followed by a space and your JWT token."'
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
