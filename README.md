@@ -46,3 +46,9 @@ create a .env file in the project root (if it doesn't already exist) and add the
   DB_NAME=yourdbname
   DB_PORT=5432
 ```
+
+### Integrations:
+- Postgres
+- Gorm
+- Bcrypt
+- JWT
